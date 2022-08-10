@@ -1,5 +1,4 @@
-#!/usr/bin/python
-
+#!/usr/bin/python3
 import sys
 import time
 import random
@@ -13,43 +12,30 @@ args = parser.parse_args()
 
 numbers = []
 stars = []
-rand_num = random.randrange(1,49)
 
-def euromillions(nb_stars):
-
-	z = """
+z = """
  			Tirage en cours ....
         [+]█████████████████████████████████████████████████[+]
-
 """
-	for c in z:
-		sys.stdout.write(c)
-		sys.stdout.flush()
-		time.sleep(0.02)
-	for num in range(5):
-		add_num_to_list = numbers.append(rand_num)
-		if numbers.count(rand_num) > 1:
-			multiple_numbers()
-	for star in range(nb_stars):
-		rand_star = random.randrange(1,12)
-		stars.append(rand_star)
-		if stars.count(rand_num) > 1:
-			multiple_numbers()
-	return numbers,stars
+for c in z:
+	sys.stdout.write(c)
+	sys.stdout.flush()
+	time.sleep(0.02)
 
-def multiple_numbers():
-	ind = numbers.index(rand_num)
-	new_random_num = random.randrange(1,49)
-	numbers.remove(rand_num)
-	numbers.insert(ind,new_random_num)
+def tirage(name_list,len_num,nb_min,nb_max):
 
-def loto():
-	euromillions(1)
+	for x in range(len_num):
+		gen_num = random.randrange(nb_min,nb_max)
+		name_list.append(gen_num)
+		if name_list.count(gen_num) > 1:
+			name_list.remove(gen_num)
+			name_list.append(random.randrange(nb_min,nb_max))
+	return name_list
+
 
 if args.euromillions:
-	euromillions(2)
-	print(f'Numbers: {numbers}\nStars: {stars}')
-
+	print('Numbers:',tirage(numbers,5,1,49))
+	print('Stars:',tirage(stars,2,1,12))
 elif args.loto:
-	loto()
-	print(f'Numbers: {numbers}\nStars: {stars}')
+	print('Numbers:',tirage(numbers,5,1,49))
+	print('Stars:',tirage(numbers,1,1,12))
